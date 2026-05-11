@@ -1,4 +1,4 @@
-name: Snyk Security Scan 1
+name: Snyk Security Scan
 
 on:
   push:
@@ -25,7 +25,16 @@ jobs:
       - name: Build with Maven
         run: mvn clean install -DskipTests
 
-      # 4. Run Snyk scan
+      # 4. Build + SonarCloud Scan
+      - name: Build and Analyze with SonarCloud
+        run: |
+          mvn -B verify sonar:sonar 
+            -Dsonar.projectKey=java-reachability-playground-hunt 
+            -Dsonar.organization=java-reachability-playground-hunt 
+            -Dsonar.host.url=https://sonarcloud.io 
+            -Dsonar.login=$SONAR_TOKEN
+
+      # 5. Run Snyk scan
       - name: Run Snyk scan
         uses: snyk/actions/maven@master
         env:
