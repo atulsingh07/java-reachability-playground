@@ -23,11 +23,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B verify sonar:sonar
-          -Dsonar.projectKey=java-reachability-playground-hunt
-          -Dsonar.organization=java-reachability-playground-hunt
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.login=${SONAR_TOKEN}
+          mvn -B verify sonar:sonar -Dsonar.projectKey=java-reachability-playground-hunt -Dsonar.organization=java-reachability-playground-hunt -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_TOKEN}
 
       - name: Run Snyk Scan
         uses: snyk/actions/maven@master
