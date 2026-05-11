@@ -10,11 +10,12 @@ jobs:
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
-      - name: Lint Code Base
-        uses: github/super-linter/slim@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: master
           DISABLE_ERRORS: true
           VALIDATE_JAVA: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
