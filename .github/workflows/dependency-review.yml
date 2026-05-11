@@ -1,4 +1,4 @@
-name: Snyk Security Scan
+name: Snyk Security Scan 1
 
 on:
   push:
@@ -30,7 +30,5 @@ jobs:
         uses: snyk/actions/maven@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      
 
         continue-on-error: true
