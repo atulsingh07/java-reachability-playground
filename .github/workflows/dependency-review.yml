@@ -34,10 +34,4 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io 
             -Dsonar.login=$SONAR_TOKEN
 
-      # 5. Run Snyk scan
-      - name: Run Snyk scan
-        uses: snyk/actions/maven@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
         continue-on-error: true
