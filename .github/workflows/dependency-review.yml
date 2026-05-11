@@ -5,33 +5,34 @@ on:
   pull_request:
 
 jobs:
-  snyk-scan:
+  security-scan:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      # 2. Setup Java
-      - name: Set up JDK
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
 
-      # 3. Build project
-      - name: Build with Maven
-        run: mvn clean install -DskipTests
-
-      # 4. Build + SonarCloud Scan
-      - name: Build and Analyze with SonarCloud
+      - name: Build + SonarCloud Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B verify sonar:sonar 
-            -Dsonar.projectKey=java-reachability-playground-hunt 
-            -Dsonar.organization=java-reachability-playground-hunt 
-            -Dsonar.host.url=https://sonarcloud.io 
-            -Dsonar.login=$SONAR_TOKEN
+          mvn -B verify sonar:sonar
+          -Dsonar.projectKey=java-reachability-playground-hunt
+          -Dsonar.organization=java-reachability-playground-hunt
+          -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.login=${SONAR_TOKEN}
 
+      - name: Run Snyk Scan
+        uses: snyk/actions/maven@master
         continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
