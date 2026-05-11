@@ -1,4 +1,4 @@
-name: 'Super Linter'
+name: 'Super Linter 1'
 on: [push]
 
 permissions:
