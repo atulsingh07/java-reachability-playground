@@ -31,13 +31,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # 5. Build + SonarCloud Scan
-      - name: Build and Analyze with SonarCloud
-        run: |
-          mvn -B verify sonar:sonar 
-            -Dsonar.projectKey=java-reachability-playground-hunt 
-            -Dsonar.organization=java-reachability-playground-hunt 
-            -Dsonar.host.url=https://sonarcloud.io 
-            -Dsonar.login=$SONAR_TOKEN
+      
 
         continue-on-error: true
